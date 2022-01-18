@@ -138,7 +138,7 @@ exports.getEvaluateds = (req, res) => {
                     JOIN users ON rates.user_id = users.user_id
                     WHERE rates.user_id != ?;                
     `
-
+    console.log("teste")
     const resp = (err, results) => {
         if(err){
             res.status(404).send("Not found!");
@@ -147,7 +147,7 @@ exports.getEvaluateds = (req, res) => {
         res.json(results);
         
     }
-    conn.query(query, user[0].id, resp)
+    conn.query(query, users[0].id, resp)
 }
 
 // List all movies not evaluateds
@@ -167,7 +167,7 @@ exports.getNotvaluateds = (req, res) => {
         res.json(results);
         
     }
-    conn.query(query, user[0].id, resp)
+    conn.query(query, users[0].id, resp)
 }
 
 // Post evaluation

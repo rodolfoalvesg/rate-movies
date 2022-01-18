@@ -6,4 +6,6 @@ module.exports = (app) => {
     app.delete('/movies/:id', MovieController.delete);
     app.get('/movies', MovieController.get);
     app.get('/movies/:id', MovieController.getById);
+    app.get('/evaluated', MovieController.getEvaluateds);
+    app.get('/noevaluated', MovieController.getNotvaluateds)
 }
