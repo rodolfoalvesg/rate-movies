@@ -21,7 +21,7 @@ export function ModalGroup(props) {
         <img src={close} alt="Close"/>
       </button>
 
-      <MoviesAdd />
+      <MoviesAdd onRequestClose={props.onRequestClose} />
 
       
     </Modal> 

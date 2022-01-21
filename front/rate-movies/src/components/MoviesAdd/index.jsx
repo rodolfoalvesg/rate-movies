@@ -1,28 +1,30 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import { TitleModal, FormAdd } from './style';
+import {useForm} from 'react-hook-form';
 import axios from 'axios';
 
-const baseURL = "http://localhost:3001";
+const baseURL = "http://localhost:3001"
 
-function MoviesAdd() {
-    const [movie, setMovie] = useState([])
-    const [name, setName] = useState("")
-    const [year, setYear] = useState("")
-    const [time, setTime] = useState(0)
+function MoviesAdd(props) {
+    const {register, handleSubmit} = useForm();
+    const [movies, setMovies] =  useState([]);
+    
+    const onSubmit = movie => {
+        
+        axios.post(`${baseURL}/movies`, movie)
+        .then(response => {
+            console.log(response.data)
+        })
+        .catch(err => {
+            console.error("Erro encontrado"+ err)
+        })
+        props.onRequestClose();
+    }
 
-    useEffect(()=>{
-        axios.post(`${baseURL}/movies`, {
-            name: name,
-            year: year,
-            time: time
-        })
-        .then((response => {
-            setMovie(response.data)
-        }))
-        .catch((err) => {
-            console.error("Erro encontrado" + err)
-        })
-    }, [])
+    useEffect(() => {
+        setMovies(movies)
+    }, [movies])
+    
 
     return(
         <>
@@ -30,10 +32,10 @@ function MoviesAdd() {
                 Cadastrar Filme ou Série
             </TitleModal>
 
-            <FormAdd action="">
-                <input type="text" name="name" onChange={e => e.target.name}/> 
-                <input type="text" name="year" onChange={e => e.target.year}/> 
-                <input type="number" name="time" onChange={e => e.target.time}/> 
+            <FormAdd onSubmit={handleSubmit(onSubmit)}>
+                <input {...register("name")} />
+                <input {...register("year")}/> 
+                <input {...register("time")} /> 
 
                 <button type="submit">Cadastrar</button>
             </FormAdd>

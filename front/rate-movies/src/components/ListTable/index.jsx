@@ -11,7 +11,6 @@ function ListTable(){
     const [movies, setMovies] = useState([])
 
     useEffect(()=>{
-        
             axios.get(`${baseURL}/movies`)
             .then((response)=>setMovies(response.data))
             .catch((err)=>{
